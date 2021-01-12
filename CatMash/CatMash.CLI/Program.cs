@@ -1,12 +1,24 @@
-﻿using System;
+﻿using CommandLine;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CatMash.CLI
 {
-    class Program
+    public static partial class Program
     {
-        static void Main(string[] args)
+        public static async Task Main(string[] args) => await Parser.Default
+            .ParseArguments<SeedDbOptions>(args)
+            .MapResult(
+                RunSeedProgram,
+                RunErrorProgram
+            );
+
+        private static async Task RunSeedProgram(SeedDbOptions options) => await Services.Get<IDbSeeder>().SeedCatsCollection(options.DataUrl);
+        private static Task RunErrorProgram(IEnumerable<Error> errors)
         {
-            Console.WriteLine("Hello World!");
+            errors.ForEach(Console.WriteLine);
+            return Task.CompletedTask;
         }
     }
 }

@@ -5,9 +5,13 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatMash.Api", "CatMash.Api\CatMash.Api.csproj", "{8A2FE770-8092-42F4-A222-9F60BD6AEB4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatMash.Core", "CatMash.Core\CatMash.Core.csproj", "{C5521D94-D701-4C03-ABCB-141365F28D9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatMash.Core", "CatMash.Core\CatMash.Core.csproj", "{C5521D94-D701-4C03-ABCB-141365F28D9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatMash.CLI", "CatMash.CLI\CatMash.CLI.csproj", "{726A42B5-073E-4751-8BC5-AB050361BB24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatMash.CLI", "CatMash.CLI\CatMash.CLI.csproj", "{726A42B5-073E-4751-8BC5-AB050361BB24}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{C0A4EE1F-E406-4AC2-A034-6F5368E371CD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatMash.Tests", "CatMash.Tests\CatMash.Tests.csproj", "{A07014F6-6221-47FD-892E-C5D09C795CC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +31,10 @@ Global
 		{726A42B5-073E-4751-8BC5-AB050361BB24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{726A42B5-073E-4751-8BC5-AB050361BB24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{726A42B5-073E-4751-8BC5-AB050361BB24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A07014F6-6221-47FD-892E-C5D09C795CC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A07014F6-6221-47FD-892E-C5D09C795CC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A07014F6-6221-47FD-892E-C5D09C795CC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A07014F6-6221-47FD-892E-C5D09C795CC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

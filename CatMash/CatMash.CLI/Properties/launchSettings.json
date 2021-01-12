@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CatMash.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "--src=\"https://latelier.co/data/cats.json\""
+    }
+  }
+}
