@@ -41,7 +41,7 @@ namespace CatMash.Api.Services
 
             Document newDoc = new();
             
-            if (userId is not null)
+            if (userId != null)
                 newDoc.Fields.Add("userId", new() { StringValue = userId });
 
             newDoc.Fields.Add("cat1Id", new() { StringValue = cat1.CatId });
@@ -56,7 +56,7 @@ namespace CatMash.Api.Services
             Document created = await firestore.CreateDocumentAsync(createReq);
 
             string proposalId = FirestoreUtils.ExtractIdFromName(created.Name);
-            return new ProposalModel(proposalId, cat1, cat2);
+            return new ProposalModel(proposalId, userId, cat1, cat2);
         }
 
         public async Task SubmitVote(VoteModel vote)
@@ -65,8 +65,8 @@ namespace CatMash.Api.Services
             newDoc.Fields.Add("proposalId", new() { StringValue = vote.ProposalId });
             newDoc.Fields.Add("catId", new() { StringValue = vote.CatId });
 
-            if (vote.userId is not null)
-                newDoc.Fields.Add("userId", new() { StringValue = vote.userId });
+            if (vote.UserId is not null)
+                newDoc.Fields.Add("userId", new() { StringValue = vote.UserId });
 
             CreateDocumentRequest createReq = new()
             {

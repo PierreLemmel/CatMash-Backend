@@ -2,18 +2,12 @@ using CatMash.Api.Services;
 using Google.Cloud.Firestore.V1;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CatMash.Api
 {
@@ -26,7 +20,10 @@ namespace CatMash.Api
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        private const string AllowFrontCorsPolicy = "AllowFrontEndPolicy";
+        private const string frontUrl = "https://catmash-plml.web.app";
+
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton(sp =>
@@ -44,15 +41,25 @@ namespace CatMash.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CatMash.Api", Version = "v1" });
             });
+
+            
+            services.AddCors(options => options.AddPolicy(
+                AllowFrontCorsPolicy,
+                policy => policy
+                    .WithOrigins(frontUrl)
+                    .AllowAnyHeader()
+                ));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(AllowFrontCorsPolicy);
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CatMash.Api v1"));

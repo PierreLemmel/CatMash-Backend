@@ -16,10 +16,10 @@ namespace CatMash.Api.Controllers
             this.catService = catService;
         }
 
-        [HttpGet("get-proposal")]
-        public async Task<ActionResult<ProposalModel>> GetProposal(string? userId)
+        [HttpPost("require-proposal")]
+        public async Task<ActionResult<ProposalModel>> RequireProposal(RequireProposalModel requireProposal)
         {
-            ProposalModel proposal = await catService.RequireNewPorposal(userId);
+            ProposalModel proposal = await catService.RequireNewPorposal(requireProposal.UserId);
             return Ok(proposal);
         }
 
