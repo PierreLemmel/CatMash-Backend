@@ -17,9 +17,17 @@ namespace CatMash.Api.Controllers
         }
 
         [HttpGet("get-proposal")]
-        public async Task<ProposalModel> GetProposal(string? userId) => await catService.RequireNewPorposal(userId);
+        public async Task<ActionResult<ProposalModel>> GetProposal(string? userId)
+        {
+            ProposalModel proposal = await catService.RequireNewPorposal(userId);
+            return Ok(proposal);
+        }
 
         [HttpPost("submit-vote")]
-        public async Task SubmitVote(VoteModel vote) => await catService.SubmitVote(vote);
+        public async Task<ActionResult> SubmitVote(VoteModel vote)
+        {
+            await catService.SubmitVote(vote);
+            return Ok();
+        }
     }
 }
