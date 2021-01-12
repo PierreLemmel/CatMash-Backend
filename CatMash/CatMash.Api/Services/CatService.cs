@@ -65,6 +65,9 @@ namespace CatMash.Api.Services
             newDoc.Fields.Add("proposalId", new() { StringValue = vote.ProposalId });
             newDoc.Fields.Add("catId", new() { StringValue = vote.CatId });
 
+            if (vote.userId is not null)
+                newDoc.Fields.Add("userId", new() { StringValue = vote.userId });
+
             CreateDocumentRequest createReq = new()
             {
                 Document = newDoc,
