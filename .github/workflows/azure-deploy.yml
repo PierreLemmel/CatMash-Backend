@@ -20,8 +20,8 @@ jobs:
       with:
         dotnet-version: '5.0.x'
 
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+    - name: Build with dotnet 
+      run: dotnet build Catmash/Catmash.sln --configuration Release
 
     - name: dotnet publish
       run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
@@ -29,7 +29,7 @@ jobs:
     - name: Deploy to Azure Web App
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'Test-plml'
+        app-name: 'catmash-plml-back'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_502efeded291419bb951f81eab920488 }}
-        package: ${{env.DOTNET_ROOT}}/myapp 
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_dec06f41ed80468b93778bf9375f721f }}
+        package: ${{env.DOTNET_ROOT}}/myapp
