@@ -31,5 +31,5 @@ jobs:
       with:
         app-name: 'catmash-plml-back'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_dec06f41ed80468b93778bf9375f721f }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_d3bba125e838484486a0c42963016324 }}
         package: ${{env.DOTNET_ROOT}}/myapp
