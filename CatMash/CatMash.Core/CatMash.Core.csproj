@@ -8,12 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="..\SolutionItems\catmash-plml.json" Link="catmash-plml.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Google.Cloud.Firestore.V1" Version="2.2.0" />
     <PackageReference Include="System.Text.Json" Version="5.0.0" />
   </ItemGroup>

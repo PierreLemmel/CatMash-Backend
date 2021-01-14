@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System;
 using System.IO;
+using System.Text.Json;
 
 namespace CatMash.Api
 {
@@ -21,18 +23,28 @@ namespace CatMash.Api
         public IConfiguration Configuration { get; }
 
         private const string AllowFrontCorsPolicy = "AllowFrontEndPolicy";
-        private const string frontUrl = "https://catmash-plml.web.app";
-
 
         public void ConfigureServices(IServiceCollection services)
         {
+#if DEBUG
+            string credPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../IgnoredFiles/catmash-plml.json");
+
             services.AddSingleton(sp =>
             {
-                string credentialsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "catmash-plml.json");
-                FirestoreClientBuilder builder = new() { CredentialsPath = credentialsPath };
+                FirestoreClientBuilder builder = new() { CredentialsPath = credPath };
 
                 return builder.Build();
             });
+#elif RELEASE
+            string jsonCreds = Configuration.GetValue<string>("GcpCredentialsJson");
+
+            services.AddSingleton(sp =>
+            {
+                FirestoreClientBuilder builder = new() { JsonCredentials = jsonCreds };
+
+                return builder.Build();
+            });
+#endif
 
             services.AddSingleton<ICatService, CatService>();
 
@@ -42,12 +54,17 @@ namespace CatMash.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CatMash.Api", Version = "v1" });
             });
 
-            
-            services.AddCors(options => options.AddPolicy(
-                AllowFrontCorsPolicy,
-                policy => policy
-                    .WithOrigins(frontUrl)
-                    .AllowAnyHeader()
+            string frontUrl = Configuration.GetValue<string>("AllowCorsOrigin");
+            services.AddCors(options => options.AddDefaultPolicy(
+                policy => policy.WithMethods("GET", "POST")
+#if DEBUG
+                                .AllowAnyOrigin()
+#elif RELEASE
+                                .WithOrigins(frontUrl) // Can't use cors with localhost
+#else
+#error Unexpected configuration
+#endif
+                                .AllowAnyHeader()
                 ));
         }
 
@@ -59,7 +76,7 @@ namespace CatMash.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors(AllowFrontCorsPolicy);
+            app.UseCors();
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CatMash.Api v1"));

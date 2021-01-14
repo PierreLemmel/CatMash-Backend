@@ -10,8 +10,11 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatMash.CLI", "CatMash.CLI\CatMash.CLI.csproj", "{726A42B5-073E-4751-8BC5-AB050361BB24}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{C0A4EE1F-E406-4AC2-A034-6F5368E371CD}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\azure-deploy.yml = ..\.github\workflows\azure-deploy.yml
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatMash.Tests", "CatMash.Tests\CatMash.Tests.csproj", "{A07014F6-6221-47FD-892E-C5D09C795CC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatMash.Tests", "CatMash.Tests\CatMash.Tests.csproj", "{A07014F6-6221-47FD-892E-C5D09C795CC1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

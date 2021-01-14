@@ -21,9 +21,16 @@ namespace CatMash.CLI
 
             services.AddSingleton(sp =>
             {
-                string credentialsPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "catmash-plml.json");
-                FirestoreClientBuilder builder = new () { CredentialsPath = credentialsPath };
-                
+#if DEBUG
+                string credPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "../../../../IgnoredFiles/catmash-plml.json");
+                FirestoreClientBuilder builder = new() { CredentialsPath = credPath };
+#elif RELEASE
+                string credentialsJson = Environment.GetEnvironmentVariable("GcpCredentialsJson") ?? throw new InvalidOperationException("Missing 'GcpCredentialsJson' environment variable");
+                FirestoreClientBuilder builder = new() { JsonCredentials = credentialsJson };
+#else
+#error Unexpected configuration
+#endif
+
                 return builder.Build();
             });
 

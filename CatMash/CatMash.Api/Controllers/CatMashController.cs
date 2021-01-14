@@ -1,6 +1,7 @@
 ﻿using CatMash.Api.Models;
 using CatMash.Api.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CatMash.Api.Controllers
@@ -28,6 +29,13 @@ namespace CatMash.Api.Controllers
         {
             await catService.SubmitVote(vote);
             return Ok();
+        }
+
+        [HttpGet("cat-stats")]
+        public async Task<ActionResult<IReadOnlyCollection<CatStatModel>>> GetCatStats()
+        {
+            IReadOnlyCollection<CatStatModel> stats = await catService.GetCatStats();
+            return Ok(stats);
         }
     }
 }

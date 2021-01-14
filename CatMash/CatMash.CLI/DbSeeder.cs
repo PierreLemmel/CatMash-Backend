@@ -47,6 +47,8 @@ namespace CatMash.CLI
             {
                 Document newDoc = new();
                 newDoc.Fields.Add("url", new() { StringValue = cat.url });
+                newDoc.Fields.Add("matches", new() { IntegerValue = 0 });
+                newDoc.Fields.Add("votes", new() { IntegerValue = 0 });
 
                 CreateDocumentRequest createReq = new()
                 {
