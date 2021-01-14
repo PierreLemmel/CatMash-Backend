@@ -45,20 +45,29 @@ namespace CatMash.CLI
 
             foreach(var cat in cats)
             {
-                Document newDoc = new();
-                newDoc.Fields.Add("url", new() { StringValue = cat.url });
-                newDoc.Fields.Add("matches", new() { IntegerValue = 0 });
-                newDoc.Fields.Add("votes", new() { IntegerValue = 0 });
-
-                CreateDocumentRequest createReq = new()
-                {
-                    Parent = DocumentsRoot,
-                    CollectionId = CatsCollection,
-                    DocumentId = cat.id,
-                    Document = newDoc
-                };
-                await firestore.CreateDocumentAsync(createReq);
+                await CreateCat(cat);
             }
+
+            // Yes, I'm cheating to help my cat win
+            CatModel maki = new CatModel("https://i.ibb.co/cyGX94D/image-2021-01-07-220329.png", "maki");
+            await CreateCat(maki, 1850, 1500);
+        }
+
+        private async Task CreateCat(CatModel cat, int matches = 0, int votes = 0)
+        {
+            Document newDoc = new();
+            newDoc.Fields.Add("url", new() { StringValue = cat.url });
+            newDoc.Fields.Add("matches", new() { IntegerValue = matches });
+            newDoc.Fields.Add("votes", new() { IntegerValue = votes });
+
+            CreateDocumentRequest createReq = new()
+            {
+                Parent = DocumentsRoot,
+                CollectionId = CatsCollection,
+                DocumentId = cat.id,
+                Document = newDoc
+            };
+            await firestore.CreateDocumentAsync(createReq);
         }
     }
 }
